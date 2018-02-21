@@ -5,14 +5,33 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib;
 
+import java.io.File;
+import java.io.FileReader;
+
 /**
  *
  * @author dmmaga
  */
 public class procesadorArchivos {
     
+    
+    
     public boolean cargarArchivo(final String path){
-        return false;
+        if (path!=null && !path.trim().isEmpty()) {
+            try {
+                File archivo = new File (path);
+                FileReader fr = new FileReader (archivo);
+                return true;
+            } catch (Exception e) {
+          
+            }
+
+        }
+            return false;
     }
+    
+    
+    
+    
     
 }

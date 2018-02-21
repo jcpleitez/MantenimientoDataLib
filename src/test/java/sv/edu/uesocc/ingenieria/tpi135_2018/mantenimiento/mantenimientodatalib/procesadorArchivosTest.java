@@ -42,10 +42,10 @@ public class procesadorArchivosTest {
      */
     @org.junit.Test
     public void testCargarArchivo() {
-        System.out.println("cargarArchivo");
-        String path = "";
+        System.out.println("prueba de cargarArchivo");
+        String path = getClass().getClassLoader().getResource("inventario.csv").getFile();
         procesadorArchivos instance = new procesadorArchivos();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.cargarArchivo(path);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
