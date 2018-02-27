@@ -45,32 +45,52 @@ public class procesadorArchivosTest {
      */
     @org.junit.Test
     public void testCargarArchivo() {
-        System.out.println("prueba de cargarArchivo");
+        System.out.println("*Prueba de cargarArchivo:");
         String path = getClass().getClassLoader().getResource("inventario.csv").getFile();
         procesadorArchivos instance = new procesadorArchivos();
         File expResult = new File(path);
         File result = instance.cargarArchivo(path);
+        System.out.println(result);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("Esto va a fallar");
     }
 
+    
     /**
-     * Test of cargarLista method, of class procesadorArchivos.
+     * Test of separadorRegistros method, of class procesadorArchivos.
      */
     @Test
-    public void testCargarLista() {
-        System.out.println("prueba cargarLista");
+    public void testSeparadorRegistros() {
+        System.out.println("*Prueba separadorLineas:");
         String path = getClass().getClassLoader().getResource("inventario.csv").getFile();
         File file = new File(path);
         procesadorArchivos instance = new procesadorArchivos();
-        boolean expResult = true;
-        boolean result = instance.cargarLista(file).get(0).isLicencia();
+        int expResult = 3; // Esperamos que haya 1 registro
+        int result = instance.separadorRegistros(file).size(); // Cantidad de registros actuales        
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of convertirObjectos method, of class procesadorArchivos.
+     */
+    @Test
+    public void testConvertirObjectos() {
+        System.out.println("*Prueba convertirObjectos:");
+        ArrayList<String> todosRegistros = new ArrayList<String>();
+        todosRegistros.add("1, HP1, 12040.3334. 080.0017, Lenovo, MJVZLKF, ThinkCentre M82 L, Licda. Rina de Zometa , Windows, \"7.0 Professional SP1, 64 bits\",true, \"Office 2010 Pirata, 8 GB RAM Bocinas y Mouse N° 12040.3334.080.0016\"");
+        procesadorArchivos instance = new procesadorArchivos();
+        int expResult = 1;
+        int result = instance.convertirObjectos(todosRegistros).get(0).getIdMantenimiento();
+        System.out.println(result);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
 
     
+
     
 }

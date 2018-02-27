@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones.Mantenimiento;
@@ -19,38 +18,6 @@ import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones.Mantenimi
  * @author dmmaga
  */
 public class procesadorArchivos {
-    
-    public ArrayList<Mantenimiento> cargarLista(File file){
-        ArrayList<Mantenimiento> lista = null;
-        FileReader fr = null;
-        BufferedReader br = null;
-        try {
-            fr = new FileReader(file);
-            String line;
-            br = new BufferedReader(fr);
-            lista = new ArrayList<Mantenimiento>();
-            //Leer linea por linea
-            while ((line = br.readLine()) != null){
-                String lineArray[] = line.split(",");
-                int idMantenimiento = Integer.parseInt(lineArray[0]);
-                String historico = lineArray[1];
-                String noInventario = lineArray[2];                
-                String marca = lineArray[3];
-                String noSerie = lineArray[4];
-                String modelo = lineArray[5];
-                String responsable = lineArray[6];
-                String sistemaOperativo = lineArray[7];
-                String version = lineArray[8];
-                boolean licencia = lineArray[9].equals(" true");
-                String observaciones = lineArray[10];
-                Mantenimiento registro = new Mantenimiento(idMantenimiento, historico, noInventario, marca, noSerie, modelo, responsable, sistemaOperativo, version, licencia, observaciones);
-                lista.add(registro);
-            }
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
-        }
-        return lista;        
-    }
     
     public File cargarArchivo(final String path){
         if (path!=null && !path.trim().isEmpty()) { //Vrifica que no este vacio y nulo           
@@ -63,7 +30,62 @@ public class procesadorArchivos {
     }
     
     
+    public ArrayList<String> separadorRegistros(File file){
+        ArrayList<String> lista = null;
+        FileReader fr;
+        BufferedReader br;
+        if (file != null) {
+            try {
+                String line;
+                fr = new FileReader(file);            
+                br = new BufferedReader(fr);
+                lista = new ArrayList<String>();
+                //Agregar linea por linea
+                while ((line = br.readLine()) != null){                
+                    lista.add(line);
+                }
+            } catch (Exception e) {
+                Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+            }            
+        }else{
+            System.out.println("File is null");
+        }        
+        return lista;
+    }
     
+    public ArrayList<Mantenimiento> convertirObjectos(ArrayList<String> todosRegistros){
+        ArrayList<Mantenimiento> lista = null;
+        if (todosRegistros != null && todosRegistros.size() > 0) {
+            lista = new ArrayList<Mantenimiento>();
+            for (String registro : todosRegistros) {
+                String lineArray[] = registro.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+                Mantenimiento mn = convertirMantenimiento(lineArray);
+                lista.add(mn);
+            }
+        }else{
+            System.out.println("Todos los registros Null o ningun registro");
+        }        
+        return lista;
+    }
+    
+    public Mantenimiento convertirMantenimiento(String arreglo[]){
+        Mantenimiento mantenimiento = null;
+        if(arreglo.length == 11){ // 11 son las variables privadas de nuestra clase mantenimiento
+            mantenimiento = new Mantenimiento();
+            mantenimiento.setIdMantenimiento(Integer.parseInt(arreglo[0]));
+            mantenimiento.setHistorico(arreglo[1]);
+            mantenimiento.setNoInventario(arreglo[2]);
+            mantenimiento.setMarca(arreglo[3]);
+            mantenimiento.setNoSerie(arreglo[4]);
+            mantenimiento.setModelo(arreglo[5]);
+            mantenimiento.setResponsable(arreglo[6]);
+            mantenimiento.setSistemaOperativo(arreglo[7]);
+            mantenimiento.setVersion(arreglo[8]);
+            mantenimiento.setLicencia(arreglo[9].equals("true"));
+            mantenimiento.setObservaciones(arreglo[10]);
+        }
+        return mantenimiento;        
+    }
     
     
     
