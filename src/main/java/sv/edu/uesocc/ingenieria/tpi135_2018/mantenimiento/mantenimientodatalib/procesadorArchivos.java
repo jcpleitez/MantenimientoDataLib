@@ -8,9 +8,15 @@ package sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import static java.util.stream.Collectors.toList;
 import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones.Mantenimiento;
 
 /**
@@ -19,14 +25,34 @@ import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones.Mantenimi
  */
 public class procesadorArchivos {
     
-    public File cargarArchivo(final String path){
-        if (path!=null && !path.trim().isEmpty()) { //Vrifica que no este vacio y nulo           
+    public File validarArchivo(final String path){
+        if (path!=null && !path.trim().isEmpty()) { //Verifica que no este vacio y nulo           
             File archivo = new File (path);              
-            if(archivo.isFile()){                   //Verifica que sea un archivo
+            if(archivo.isFile() && archivo.canRead()){//Verifica que sea un archivo y que tenga permisos de leer
                 return archivo;
             }
         }
         return null;
+    }
+    
+    public boolean validarDirectorio(final String path){
+        if (path!=null && !path.trim().isEmpty()) { //Verifica que no este vacio y nulo
+            File archivo = new File (path);              
+            return (archivo.isDirectory() && archivo.canRead());
+        }
+        return false;
+    }
+    
+    public File[] cargarArchivos(final String path) throws IOException{        
+        Object[] lista = Files.walk(Paths.get(path)).
+                filter(a -> !validarDirectorio(a.toString()) & a.getFileName().toString().endsWith(".csv")).                
+                toArray();
+        File[] archivos = new File[lista.length];
+        for (int i = 0; i < lista.length; i++) {
+            archivos[i]= new File(lista[i].toString());
+        }
+
+        return archivos;
     }
     
     

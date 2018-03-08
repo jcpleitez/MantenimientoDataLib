@@ -6,6 +6,7 @@
 package sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,6 +14,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones.Mantenimiento;
 
 /**
@@ -20,6 +23,8 @@ import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones.Mantenimi
  * @author dmmaga
  */
 public class procesadorArchivosTest {
+    
+    
     
     public procesadorArchivosTest() {
     }
@@ -38,22 +43,6 @@ public class procesadorArchivosTest {
     
     @After
     public void tearDown() {
-    }
-
-    /**
-     * Test of cargarArchivo method, of class procesadorArchivos.
-     */
-    @org.junit.Test
-    public void testCargarArchivo() {
-        System.out.println("*Prueba de cargarArchivo:");
-        String path = getClass().getClassLoader().getResource("inventario.csv").getFile();
-        procesadorArchivos instance = new procesadorArchivos();
-        File expResult = new File(path);
-        File result = instance.cargarArchivo(path);
-        System.out.println(result);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("Esto va a fallar");
     }
 
     
@@ -90,7 +79,60 @@ public class procesadorArchivosTest {
         //fail("The test case is a prototype.");
     }
 
+    /**
+     * Test of validarArchivo method, of class procesadorArchivos.
+     */
+    @Test
+    public void testValidarArchivo() {
+        System.out.println("*Prueba de cargarArchivo:");
+        String path = getClass().getClassLoader().getResource("inventario.csv").getFile();
+        procesadorArchivos instance = new procesadorArchivos();
+        File expResult = new File(path);
+        File result = instance.validarArchivo(path);
+        System.out.println(result);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("Esto va a fallar");
+    }
+
+    /**
+     * Test of validarDirectorio method, of class procesadorArchivos.
+     */
     
+    @Rule
+    public TemporaryFolder carpetaPrueba = new TemporaryFolder();
+
+    
+    @Test
+    public void testValidarDirectorio() throws IOException{
+        System.out.println("*Prueba de validarDirectorio");                
+        String path = carpetaPrueba.getRoot().toString();
+        procesadorArchivos instance = new procesadorArchivos();
+        boolean expResult = true;
+        boolean result = instance.validarDirectorio(path);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }    
+
+    /**
+     * Test of cargarArchivos method, of class procesadorArchivos.
+     */
+    @Test
+    public void testCargarArchivos() throws Exception {
+        System.out.println("*Prueba cargarArchivos");
+        File tempFile1 = carpetaPrueba.newFile("file1.csv");
+        File tempFile2 = carpetaPrueba.newFile("file2.txt");
+        File tempFile3 = carpetaPrueba.newFile("file3.csv");       
+        String path = carpetaPrueba.getRoot().toString();
+        procesadorArchivos instance = new procesadorArchivos();                
+        File[] expResult = {tempFile1, tempFile3};     
+        File[] result = instance.cargarArchivos(path);
+        System.out.println("FILE="+result[0]);
+        assertArrayEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
 
     
 }
