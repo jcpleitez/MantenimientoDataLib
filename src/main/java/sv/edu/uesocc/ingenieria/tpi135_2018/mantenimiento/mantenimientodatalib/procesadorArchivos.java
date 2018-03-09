@@ -56,14 +56,14 @@ public class procesadorArchivos {
     }
     
     
-    public ArrayList<String> separadorRegistros(File file){
+    public ArrayList<String> parser(File file){
         ArrayList<String> lista = null;
         FileReader fr;
         BufferedReader br;
         if (file != null) {
             try {
                 String line;
-                fr = new FileReader(file);            
+                fr = new FileReader(file);
                 br = new BufferedReader(fr);
                 lista = new ArrayList<String>();
                 //Agregar linea por linea
