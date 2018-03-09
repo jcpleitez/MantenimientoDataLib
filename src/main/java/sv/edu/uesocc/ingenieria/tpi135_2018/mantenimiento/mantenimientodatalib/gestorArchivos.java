@@ -27,10 +27,10 @@ public class gestorArchivos {
 
     public gestorArchivos() {                                                   //Valores por defecto
         caracter = ",";
-        encabezado = true;
+        encabezado = false;
     }
     
-    public gestorArchivos(String caracter, boolean encabezado) {//Valores personalizados
+    public gestorArchivos(String caracter, boolean encabezado) {                //Valores personalizados
         this.caracter = caracter;
         this.encabezado = encabezado;
     }
@@ -73,6 +73,7 @@ public class gestorArchivos {
                 forEach((f)->{
                     lista.add(Arrays.asList(f.split(this.caracter+this.expresion)));
                 });
+            return lista;
         }
         return null;
     }
