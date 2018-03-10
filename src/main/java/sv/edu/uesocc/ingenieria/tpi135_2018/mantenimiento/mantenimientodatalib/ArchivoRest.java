@@ -36,15 +36,15 @@ public class ArchivoRest {
 //        return null;
 //    }
     
-    @GET
-    @Produces({MediaType.APPLICATION_JSON+"; charset=utf-8"})
-    public Mantenimiento getMantenimiento(String uri){
-        if(uri != null && !uri.trim().isEmpty()){
-            WebTarget target = cliente.target(uri);
-            Mantenimiento jsonObject = target.request(MediaType.APPLICATION_JSON).post(Entity.entity(new Mantenimiento(), MediaType.APPLICATION_JSON), Mantenimiento.class);
-            return jsonObject;
-        }
-        return null;
-    }
+//    @GET
+//    @Produces({MediaType.APPLICATION_JSON+"; charset=utf-8"})
+//    public Mantenimiento getMantenimiento(String uri){
+//        if(uri != null && !uri.trim().isEmpty()){
+//            WebTarget target = cliente.target(uri);
+//            Mantenimiento jsonObject = target.request(MediaType.APPLICATION_JSON).post(Entity.entity(new Mantenimiento(), MediaType.APPLICATION_JSON), Mantenimiento.class);
+//            return jsonObject;
+//        }
+//        return null;
+//    }
     
 }
