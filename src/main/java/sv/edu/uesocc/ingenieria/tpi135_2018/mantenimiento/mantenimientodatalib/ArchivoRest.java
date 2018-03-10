@@ -6,16 +6,17 @@
 package sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib;
 
 
-import javax.ws.rs.GET;
-import static javax.ws.rs.HttpMethod.GET;
-import static javax.ws.rs.HttpMethod.POST;
-import javax.ws.rs.POST;
-import javax.ws.rs.Produces;
+import java.net.URI;
+import java.util.List;
+import javax.json.Json;
+import javax.json.JsonBuilderFactory;
+import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones.Mantenimiento;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -23,7 +24,31 @@ import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones.Mantenimi
  */
 public class ArchivoRest {
     
-    Client cliente;    
+    Client cliente;
+    WebTarget raiz;
+    final static String URL_RESOURCE = "http://192.168.1.7/ws/mantenimiento";
+
+    public ArchivoRest() {
+        this.cliente = ClientBuilder.newClient();
+        this.raiz = cliente.target(URL_RESOURCE);
+    }
+    
+    public URI postLista(List<List<String>> lista){
+        if(lista != null && !lista.isEmpty()){
+            JsonObject nuevo = Json.createObjectBuilder().add("nombre", "Juan").build();
+            
+            Response respuesta = raiz.path("holaJuan").
+                    request(MediaType.APPLICATION_JSON).
+                    accept(MediaType.APPLICATION_JSON).
+                    post(Entity.json(nuevo));            
+            if(respuesta.getStatus() == Response.Status.CREATED.getStatusCode() && respuesta != null){
+                return respuesta.getLocation();
+            }
+        }
+        return null;
+    }
+    
+    
     
 //    @POST
 //    @Produces({MediaType.APPLICATION_JSON +"; charset=utf-8"})
@@ -46,5 +71,6 @@ public class ArchivoRest {
 //        }
 //        return null;
 //    }
+
     
 }
