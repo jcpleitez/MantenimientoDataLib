@@ -6,6 +6,7 @@
 package sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.client.ClientBuilder;
 import org.junit.After;
@@ -53,7 +54,13 @@ public class ArchivoRestTest {
     @Test
     public void testPostLista() {
         System.out.println("*Prueba postLista");
-        List<List<String>> lista = null;
+        
+        List<List<String>> lista = new ArrayList<>();
+        lista.add(new ArrayList<>());
+        lista.get(0).add("1");lista.get(0).add("HP");lista.get(0).add("PC1");
+        lista.add(new ArrayList<>());
+        lista.get(1).add("2");lista.get(1).add("Samsung");lista.get(1).add("PC2");
+        
         ArchivoRest instance = new ArchivoRest();
         URI expResult = null;
         URI result = instance.postLista(lista);
