@@ -10,8 +10,7 @@ package sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones;
  * @author dmmaga
  */
 public class Mantenimiento {
-    
-    
+
     private int idMantenimiento;
     private String historico;
     private String noInventario;
@@ -128,9 +127,5 @@ public class Mantenimiento {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-    
-    
-    
-    
-    
+
 }

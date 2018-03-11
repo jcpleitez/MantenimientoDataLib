@@ -24,26 +24,26 @@ import org.junit.rules.TemporaryFolder;
  * @author dmmaga
  */
 public class gestorArchivosTest {
-    
+
     public gestorArchivosTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
-    
+
     @Rule
     public TemporaryFolder carpetaPrueba = new TemporaryFolder();
 
@@ -62,7 +62,7 @@ public class gestorArchivosTest {
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
-    
+
     /**
      * Test of verificarDirectorio method, of class gestorArchivos.
      */
@@ -91,14 +91,14 @@ public class gestorArchivosTest {
         String path = carpetaPrueba.getRoot().getPath();
         gestorArchivos instance = new gestorArchivos();
         List<File> expResult = new ArrayList<>();
-        expResult.add(tempFile1);expResult.add(tempFile3);//llenamos el arreglo
+        expResult.add(tempFile1);
+        expResult.add(tempFile3);//llenamos el arreglo
         List<File> result = instance.cargarArchivos(path);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
 
-    
     /**
      * Test of parser method, of class gestorArchivos.
      */
@@ -114,5 +114,5 @@ public class gestorArchivosTest {
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
-    
+
 }
