@@ -20,7 +20,7 @@ import org.codehaus.jettison.json.JSONArray;
  * @author jcpleitez
  */
 public class ArchivoRest {
-
+    //comentariooo
     Client cliente;
     WebTarget raiz;
     final static String URL_RESOURCE = "http://192.168.1.7/ws/mantenimiento";
