@@ -14,10 +14,10 @@ public class Mantenimiento {
     private int idMantenimiento;
     private String historico;
     private String noInventario;
-    private String marca;
+    private Marca marca;
     private String noSerie;
-    private String modelo;
-    private String responsable;
+    private Modelo modelo;
+    private Responsable responsable;
     private String sistemaOperativo;
     private String version;
     private boolean licencia;
@@ -26,7 +26,7 @@ public class Mantenimiento {
     public Mantenimiento() {
     }
 
-    public Mantenimiento(int idMantenimiento, String historico, String noInventario, String marca, String noSerie, String modelo, String responsable, String sistemaOperativo, String version, boolean licencia, String observaciones) {
+    public Mantenimiento(int idMantenimiento, String historico, String noInventario, Marca marca, String noSerie, Modelo modelo, Responsable responsable, String sistemaOperativo, String version, boolean licencia, String observaciones) {
         this.idMantenimiento = idMantenimiento;
         this.historico = historico;
         this.noInventario = noInventario;
@@ -64,40 +64,12 @@ public class Mantenimiento {
         this.noInventario = noInventario;
     }
 
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
     public String getNoSerie() {
         return noSerie;
     }
 
     public void setNoSerie(String noSerie) {
         this.noSerie = noSerie;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    public String getResponsable() {
-        return responsable;
-    }
-
-    public void setResponsable(String responsable) {
-        this.responsable = responsable;
-    }
-
-    public String getSistemaOperativo() {
-        return sistemaOperativo;
     }
 
     public void setSistemaOperativo(String sistemaOperativo) {
@@ -127,5 +99,31 @@ public class Mantenimiento {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+
+    public Modelo getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(Modelo modelo) {
+        this.modelo = modelo;
+    }
+
+    public Responsable getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(Responsable responsable) {
+        this.responsable = responsable;
+    }
+    
+    
 
 }
