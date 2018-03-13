@@ -35,21 +35,21 @@ public class ArchivoRest {
         this.target = cliente.target(URL_RESOURCE);
     }
 
-    public URI postLista(List<List<String>> lista) {
-        if (lista != null && !lista.isEmpty()) {
-            //JsonObject nuevo = Json.createObjectBuilder().add("nombre", "Juan").build();
-            JSONArray jsonArray = new JSONArray();
-
-            for (List<String> list : lista) {
-                jsonArray.put(new JSONArray(list));
-            }
-
-            Response respuesta = target.path("holaJuan").
-                    request(MediaType.APPLICATION_JSON).
-                    accept(MediaType.APPLICATION_JSON).
-                    post(Entity.json(jsonArray));
-            if (respuesta.getStatus() == Response.Status.CREATED.getStatusCode() && respuesta != null) {
-                return respuesta.getLocation();
+    public URI postLista(List<List<String>> lista) {        
+        if (lista != null && !lista.isEmpty()) {        
+            if(target != null){
+                //JsonObject nuevo = Json.createObjectBuilder().add("nombre", "Juan").build();
+                JSONArray jsonArray = new JSONArray();
+                for (List<String> list : lista) {
+                    jsonArray.put(new JSONArray(list));
+                }
+                
+                Response respuesta = target.path("holaJuan").
+                        request(MediaType.APPLICATION_JSON).                        
+                        post(Entity.json(jsonArray));
+                if (respuesta.getStatus() == Response.Status.CREATED.getStatusCode() && respuesta != null) {
+                    return respuesta.getLocation();
+                }
             }
         }
         return null;

@@ -5,6 +5,7 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class ArchivoRestTest {
     @Before
     public void inicializar() throws URISyntaxException {
         Mockito.when(this.mockResponse.getStatus()).thenReturn(201);
-        Mockito.when(this.mockResponse.getLocation()).thenReturn(new URI("https://localhost/ws/mantenimiento"));
+        Mockito.when(this.mockResponse.getLocation()).thenReturn(new URI("http://localhost/ws/mantenimiento"));
         final Builder mockBuilder = Mockito.mock(Builder.class);
         Mockito.when(mockBuilder.post(Matchers.any())).thenReturn(this.mockResponse);
         
@@ -66,43 +67,40 @@ public class ArchivoRestTest {
     /**
      * Test of postLista method, of class ArchivoRest.
      */
-    //@RunWith(PowerMockRunner.class)
-    //@PrepareForTest(ClientBuilder.class)
+    
     @Test
-    public void testPostLista() {
+    public void testPostLista() throws URISyntaxException {
         System.out.println("*Prueba postLista");
 
         List<List<String>> lista = new ArrayList<>();
         lista.add(new ArrayList<>());
-        lista.get(0).add("1");
-        lista.get(0).add("HP");
-        lista.get(0).add("PC1");
+        lista.get(0).add("1");lista.get(0).add("HP");lista.get(0).add("PC1");
         lista.add(new ArrayList<>());
-        lista.get(1).add("2");
-        lista.get(1).add("Samsung");
-        lista.get(1).add("PC2");
+        lista.get(1).add("2");lista.get(1).add("Samsung");lista.get(1).add("PC2");
 
         ArchivoRest instance = new ArchivoRest();
-        URI expResult = null;
+        instance.cliente = this.mockClient;
+        URI expResult = new URI("http://localhost/ws/mantenimiento");
         URI result = instance.postLista(lista);
+        
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of postTexto method, of class ArchivoRest.
-     */
-    @Test
-    public void testPostTexto() {
-        System.out.println("postTexto");
-        String texto = "";
-        ArchivoRest instance = new ArchivoRest();
-        URI expResult = null;
-        URI result = instance.postTexto(texto);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-    }
+//    /**
+//     * Test of postTexto method, of class ArchivoRest.
+//     */
+//    @Test
+//    public void testPostTexto() {
+//        System.out.println("postTexto");
+//        String texto = "";
+//        ArchivoRest instance = new ArchivoRest();
+//        URI expResult = null;
+//        URI result = instance.postTexto(texto);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        //fail("The test case is a prototype.");
+//    }
 
 }
