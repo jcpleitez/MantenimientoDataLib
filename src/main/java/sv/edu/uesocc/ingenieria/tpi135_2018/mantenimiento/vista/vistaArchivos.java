@@ -5,14 +5,31 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.vista;
 
+import java.awt.Component;
 import java.awt.FileDialog;
 import java.awt.Frame;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivos;
 
 /**
  *
  * @author joker
  */
 public class vistaArchivos extends javax.swing.JFrame {
+    gestorArchivos ga = new gestorArchivos();
+
+    private Component contentPane;
 
     /**
      * Creates new form vistaArchivos
@@ -51,6 +68,11 @@ public class vistaArchivos extends javax.swing.JFrame {
 
         txtRuta.setBackground(new java.awt.Color(226, 226, 226));
         txtRuta.setText("   ");
+        txtRuta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRutaActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Te X Gyre Adventor", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(2, 28, 30));
@@ -59,7 +81,7 @@ public class vistaArchivos extends javax.swing.JFrame {
         btnBuscarRuta.setBackground(new java.awt.Color(0, 68, 69));
         btnBuscarRuta.setFont(new java.awt.Font("Te X Gyre Adventor", 1, 14)); // NOI18N
         btnBuscarRuta.setForeground(new java.awt.Color(255, 255, 255));
-        btnBuscarRuta.setText("Buscar Ruta");
+        btnBuscarRuta.setText("Cargar Archivo");
         btnBuscarRuta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarRutaActionPerformed(evt);
@@ -68,11 +90,6 @@ public class vistaArchivos extends javax.swing.JFrame {
 
         listaArchivosFiltrados.setBackground(new java.awt.Color(226, 226, 226));
         listaArchivosFiltrados.setFont(new java.awt.Font("Te X Gyre Adventor", 0, 12)); // NOI18N
-        listaArchivosFiltrados.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(listaArchivosFiltrados);
 
         btnAgregar.setBackground(new java.awt.Color(0, 68, 69));
@@ -87,11 +104,6 @@ public class vistaArchivos extends javax.swing.JFrame {
 
         jList1.setBackground(new java.awt.Color(226, 226, 226));
         jList1.setFont(new java.awt.Font("Te X Gyre Adventor", 0, 12)); // NOI18N
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(jList1);
 
         jLabel2.setFont(new java.awt.Font("Te X Gyre Adventor", 1, 12)); // NOI18N
@@ -129,18 +141,18 @@ public class vistaArchivos extends javax.swing.JFrame {
                                 .addGap(20, 20, 20)
                                 .addComponent(jLabel3)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel2))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnBuscarRuta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(28, 28, 28)
+                                    .addComponent(jLabel2)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBuscarRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnEnviar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -196,15 +208,58 @@ public class vistaArchivos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarRutaActionPerformed
-       FileDialog dialogoArchivo; 
-        Frame f = null;
-dialogoArchivo = new FileDialog(f,"Lista de Archivos desde Frame", FileDialog.LOAD); 
-dialogoArchivo.show();
-String archivo ="";
-archivo=dialogoArchivo.getFile();
-//txtRuta.setText(dialogoArchivo.getDirectory());
-txtRuta.setText(dialogoArchivo.getDirectory() +archivo);
+        List<File> listaArchivos = new ArrayList<File>();
+        DefaultListModel modeloLista = new DefaultListModel();
+                        initComponents();
+                        jList1.setModel(modeloLista);
+
+        JFileChooser administrador=new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.CSV","*.csv");
+        administrador.setFileFilter(filtro);
+        administrador.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        int seleccion=administrador.showOpenDialog(contentPane);
+        
+        if(seleccion==JFileChooser.APPROVE_OPTION){
+            File fichero=administrador.getSelectedFile();
+           if(ga.verificarDirectorio(fichero.getAbsolutePath())) {
+               System.out.println("Es un directorio" + fichero.getAbsolutePath());
+                try {
+                    listaArchivos = ga.cargarArchivos(fichero.getAbsolutePath());
+                    System.out.println("Archivos");
+                    Iterator iter = listaArchivos.iterator();
+                    while (iter.hasNext()){
+                         modeloLista.addElement(iter.next());
+                    System.out.println(iter.next());}
+
+                    
+    
+                } catch (IOException ex) {
+                    Logger.getLogger(vistaArchivos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+           }
+           else{
+               if (ga.verificarArchivo(fichero.getAbsolutePath())) {
+                    System.out.println("Es un archivo" + fichero.getAbsolutePath());
+               }
+               else{
+               System.out.println("LA ruta esta vacia");
+               }
+           
+           }
+           
+    //Seleccionamos el fichero
+    
+    //Ecribe la ruta del fichero seleccionado en el campo de texto
+    txtRuta.setText(fichero.getAbsolutePath());
+    JOptionPane.showMessageDialog(null,"Se selecciono con exito");
+}
+        
+        
     }//GEN-LAST:event_btnBuscarRutaActionPerformed
+
+    private void txtRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRutaActionPerformed
 
     /**
      * @param args the command line arguments
