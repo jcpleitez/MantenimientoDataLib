@@ -10,7 +10,7 @@ package sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones;
  * @author dmmaga
  */
 public class MigracionControl {
-    
+
     private String unidad;
     private int idControl;
     private String historicoMtto;
@@ -41,7 +41,7 @@ public class MigracionControl {
         this.licencia = licencia;
         this.observaciones = observaciones;
     }
-    
+
     public String getUnidad() {
         return unidad;
     }
@@ -137,8 +137,5 @@ public class MigracionControl {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-    
-    
 
-    
 }

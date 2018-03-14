@@ -37,14 +37,14 @@ public class ArchivoRest {
         this.target = cliente.target(URL_RESOURCE);
     }
 
-    public URI postMigracionControl(List<MigracionControl> lista) {        
-        if (lista != null && !lista.isEmpty()) {        
-            if(target != null){
-                JSONArray jsonArray = new JSONArray();             
+    public URI postMigracionControl(List<MigracionControl> lista) {
+        if (lista != null && !lista.isEmpty()) {
+            if (target != null) {
+                JSONArray jsonArray = new JSONArray();
                 jsonArray.put(new JSONArray(lista));
                 System.out.println(jsonArray.toString());
                 Response respuesta = target.path("migracionControl").
-                        request(MediaType.APPLICATION_JSON).                        
+                        request(MediaType.APPLICATION_JSON).
                         post(Entity.json(jsonArray));
                 if (respuesta.getStatus() == Response.Status.CREATED.getStatusCode() && respuesta != null) {
                     return respuesta.getLocation();
@@ -53,15 +53,15 @@ public class ArchivoRest {
         }
         return null;
     }
-    
-    public URI postMigracionHistorico(List<MigracionHistorico> lista) {        
-        if (lista != null && !lista.isEmpty()) {        
-            if(target != null){
-                JSONArray jsonArray = new JSONArray();             
+
+    public URI postMigracionHistorico(List<MigracionHistorico> lista) {
+        if (lista != null && !lista.isEmpty()) {
+            if (target != null) {
+                JSONArray jsonArray = new JSONArray();
                 jsonArray.put(new JSONArray(lista));
                 System.out.println(jsonArray.toString());
                 Response respuesta = target.path("migracionHistorico").
-                        request(MediaType.APPLICATION_JSON).                        
+                        request(MediaType.APPLICATION_JSON).
                         post(Entity.json(jsonArray));
                 if (respuesta.getStatus() == Response.Status.CREATED.getStatusCode() && respuesta != null) {
                     return respuesta.getLocation();
@@ -70,6 +70,5 @@ public class ArchivoRest {
         }
         return null;
     }
-    
 
 }

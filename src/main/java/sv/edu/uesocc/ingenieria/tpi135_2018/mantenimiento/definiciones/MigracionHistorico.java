@@ -10,7 +10,7 @@ package sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones;
  * @author dmmaga
  */
 public class MigracionHistorico {
-    
+
     private String responsableEquipo;
     private String noInventario;
     private String marca;
@@ -107,5 +107,5 @@ public class MigracionHistorico {
     public void setObservaciones(String[] observaciones) {
         this.observaciones = observaciones;
     }
-    
+
 }

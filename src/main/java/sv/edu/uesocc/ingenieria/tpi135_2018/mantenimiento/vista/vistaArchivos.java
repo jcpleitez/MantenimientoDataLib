@@ -311,7 +311,7 @@ public class vistaArchivos extends javax.swing.JFrame {
                         if (!l2.isEmpty()) {
                             modelo.remove(seleccionado);
                             envio.postMigracionControl(l2);
-                        }else{
+                        } else {
                             JOptionPane.showMessageDialog(null, "El archivo proporcionado no tiene el formato adecuado");
                         }
                     } else {
@@ -319,11 +319,11 @@ public class vistaArchivos extends javax.swing.JFrame {
                         if (!l2.isEmpty()) {
                             modelo.remove(seleccionado);
                             envio.postMigracionHistorico(l2);
-                        }else{
+                        } else {
                             JOptionPane.showMessageDialog(null, "El archivo proporcionado no tiene el formato adecuado");
                         }
                     }
-                    
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecciona el tipo, maje :v");
                 }

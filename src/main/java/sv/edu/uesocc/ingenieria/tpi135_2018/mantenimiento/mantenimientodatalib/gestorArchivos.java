@@ -73,18 +73,18 @@ public class gestorArchivos {
                     skip(this.encabezado ? 1 : 0).
                     filter(l -> l.contains(this.caracter)).
                     forEach((f) -> {
-                        lista.add(Arrays.asList(f.split(this.caracter + this.expresion)));                        
+                        lista.add(Arrays.asList(f.split(this.caracter + this.expresion)));
                     });
             return lista;
         }
         return null;
     }
-    
-    public List<MigracionControl> parserControl(List<List<String>> lista){
-        if(lista != null && !lista.isEmpty()){
+
+    public List<MigracionControl> parserControl(List<List<String>> lista) {
+        if (lista != null && !lista.isEmpty()) {
             List<MigracionControl> listaMC = new ArrayList<>();
             for (List<String> list : lista) {
-                if(list.size()==12 && !list.isEmpty()){
+                if (list.size() == 12 && !list.isEmpty()) {
                     MigracionControl registro = new MigracionControl();
                     registro.setUnidad(list.get(0));
                     registro.setIdControl(Integer.parseInt(list.get(1)));
@@ -99,18 +99,18 @@ public class gestorArchivos {
                     registro.setLicencia(list.get(10).equals("true"));
                     registro.setObservaciones(list.get(11));
                     listaMC.add(registro);
-                }              
+                }
             }
             return listaMC;
-        }        
-        return null;    
+        }
+        return null;
     }
-    
-    public List<MigracionHistorico> parserHistorico(List<List<String>> lista){
-        if(lista != null && !lista.isEmpty()){
+
+    public List<MigracionHistorico> parserHistorico(List<List<String>> lista) {
+        if (lista != null && !lista.isEmpty()) {
             List<MigracionHistorico> listaMH = new ArrayList<>();
             for (List<String> list : lista) {
-                if(list.size()==10 && !list.isEmpty()){
+                if (list.size() == 10 && !list.isEmpty()) {
                     MigracionHistorico registro = new MigracionHistorico();
                     registro.setResponsableEquipo(list.get(0));
                     registro.setNoInventario(list.get(1));
@@ -119,15 +119,15 @@ public class gestorArchivos {
                     registro.setModelo(list.get(4));
                     registro.setIdHistorico(Integer.parseInt(list.get(5)));
                     registro.setFecha(list.get(6));
-                    registro.setTipoMtto(list.get(7));           
+                    registro.setTipoMtto(list.get(7));
                     registro.setObservaciones(new String[]{list.get(8), list.get(9)});
                     listaMH.add(registro);
                 }
             }
             return listaMH;
         }
-        
-        return null;    
+
+        return null;
     }
 
     public String getCaracter() {
