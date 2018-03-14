@@ -94,10 +94,11 @@ public class gestorArchivosTest {
         String path = carpetaPrueba.getRoot().getPath();
         gestorArchivos instance = new gestorArchivos();
         List<File> expResult = new ArrayList<>();
-        expResult.add(tempFile3);
-        expResult.add(tempFile1);//llenamos el arreglo
+        expResult.add(tempFile3);expResult.add(tempFile1);//llenamos el arreglo
+        List<File> expResultTwo = new ArrayList<>();
+        expResultTwo.add(tempFile1);expResultTwo.add(tempFile3);//llenamos el arreglo
         List<File> result = instance.cargarArchivos(path);
-        assertEquals(expResult, result);
+        assertEquals(expResult.equals(result) || expResultTwo.equals(result), true);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
