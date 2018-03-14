@@ -28,8 +28,8 @@ import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.g
  */
 public class vistaArchivos extends javax.swing.JFrame {
 
-    gestorArchivos ga = new gestorArchivos();
-    
+    gestorArchivos gestor = new gestorArchivos();
+
     private Component contentPane;
 
     /**
@@ -210,40 +210,70 @@ public class vistaArchivos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarRutaActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        String ruta = "";
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("Titulo");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            ruta = ""+chooser.getSelectedFile().getAbsolutePath();
+            if (gestor.verificarDirectorio(ruta)) {
+                txtRuta.setText(ruta);
+                try {
+                    List<File> lista = gestor.cargarArchivos(ruta);
+                    for (File file : lista) {
+                        System.out.println("archivo: "+file.getName());
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(vistaArchivos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No selecciono ningun directorio");
+        }
+
+    }//GEN-LAST:event_btnBuscarRutaActionPerformed
+
+    private void txtRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRutaActionPerformed
+
+    public void metodoMonzon() {
         List<File> listaArchivos = new ArrayList<File>();
         DefaultListModel modeloLista = new DefaultListModel();
         initComponents();
         jList1.setModel(modeloLista);
-        
+
         JFileChooser administrador = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.CSV", "*.csv");
         administrador.setFileFilter(filtro);
         administrador.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         int seleccion = administrador.showOpenDialog(contentPane);
-        
+
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             File fichero = administrador.getSelectedFile();
-            if (ga.verificarDirectorio(fichero.getAbsolutePath())) {
+            if (gestor.verificarDirectorio(fichero.getAbsolutePath())) {
                 System.out.println("Es un directorio" + fichero.getAbsolutePath());
                 try {
-                    listaArchivos = ga.cargarArchivos(fichero.getAbsolutePath());
+                    listaArchivos = gestor.cargarArchivos(fichero.getAbsolutePath());
                     System.out.println("Archivos");
                     Iterator iter = listaArchivos.iterator();
                     while (iter.hasNext()) {
                         modeloLista.addElement(iter.next());
                         System.out.println(iter.next());
                     }
-                    
+
                 } catch (IOException ex) {
                     Logger.getLogger(vistaArchivos.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                if (ga.verificarArchivo(fichero.getAbsolutePath())) {
+                if (gestor.verificarArchivo(fichero.getAbsolutePath())) {
                     System.out.println("Es un archivo" + fichero.getAbsolutePath());
                 } else {
                     System.out.println("LA ruta esta vacia");
                 }
-                
+
             }
 
             //Seleccionamos el fichero
@@ -251,13 +281,7 @@ public class vistaArchivos extends javax.swing.JFrame {
             txtRuta.setText(fichero.getAbsolutePath());
             JOptionPane.showMessageDialog(null, "Se selecciono con exito");
         }
-        
-
-    }//GEN-LAST:event_btnBuscarRutaActionPerformed
-
-    private void txtRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtRutaActionPerformed
+    }
 
     /**
      * @param args the command line arguments
