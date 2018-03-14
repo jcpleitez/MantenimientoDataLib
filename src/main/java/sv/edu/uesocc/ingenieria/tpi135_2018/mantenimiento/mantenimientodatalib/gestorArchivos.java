@@ -130,4 +130,20 @@ public class gestorArchivos {
         return null;    
     }
 
+    public String getCaracter() {
+        return caracter;
+    }
+
+    public void setCaracter(String caracter) {
+        this.caracter = caracter;
+    }
+
+    public boolean isEncabezado() {
+        return encabezado;
+    }
+
+    public void setEncabezado(boolean encabezado) {
+        this.encabezado = encabezado;
+    }
+
 }
