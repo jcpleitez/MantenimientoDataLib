@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones.MigracionControl;
+import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones.MigracionHistorico;
 
 /**
  *
@@ -36,7 +38,7 @@ public class gestorArchivos {
     }
 
     public boolean verificarArchivo(final String path) {
-        if (path != null && !path.trim().isEmpty()) {                             //Verifica que no este vacio y nulo           
+        if (path != null && !path.trim().isEmpty()) {                           //Verifica que no este vacio y nulo           
             File archivo = new File(path);
             return (archivo.isFile() && archivo.canRead());                     //Verifica las dos condiciones archivo y lectura
         }
@@ -71,11 +73,61 @@ public class gestorArchivos {
                     skip(this.encabezado ? 1 : 0).
                     filter(l -> l.contains(this.caracter)).
                     forEach((f) -> {
-                        lista.add(Arrays.asList(f.split(this.caracter + this.expresion)));
+                        lista.add(Arrays.asList(f.split(this.caracter + this.expresion)));                        
                     });
             return lista;
         }
         return null;
+    }
+    
+    public List<MigracionControl> parserControl(List<List<String>> lista){
+        if(lista != null && !lista.isEmpty()){
+            List<MigracionControl> listaMC = new ArrayList<>();
+            for (List<String> list : lista) {
+                if(list.size()==12 && !list.isEmpty()){
+                    MigracionControl registro = new MigracionControl();
+                    registro.setUnidad(list.get(0));
+                    registro.setIdControl(Integer.parseInt(list.get(1)));
+                    registro.setHistoricoMtto(list.get(2));
+                    registro.setNoInventario(list.get(3));
+                    registro.setMarca(list.get(4));
+                    registro.setNoSerie(list.get(5));
+                    registro.setModelo(list.get(6));
+                    registro.setResponsable(list.get(7));
+                    registro.setSistemaOperativo(list.get(8));
+                    registro.setVersion(list.get(9));
+                    registro.setLicencia(list.get(10).equals("true"));
+                    registro.setObservaciones(list.get(11));
+                    listaMC.add(registro);
+                }              
+            }
+            return listaMC;
+        }        
+        return null;    
+    }
+    
+    public List<MigracionHistorico> parserHistorico(List<List<String>> lista){
+        if(lista != null && !lista.isEmpty()){
+            List<MigracionHistorico> listaMH = new ArrayList<>();
+            for (List<String> list : lista) {
+                if(list.size()==10 && !list.isEmpty()){
+                    MigracionHistorico registro = new MigracionHistorico();
+                    registro.setResponsableEquipo(list.get(0));
+                    registro.setNoInventario(list.get(1));
+                    registro.setMarca(list.get(2));
+                    registro.setNoSerie(list.get(3));
+                    registro.setModelo(list.get(4));
+                    registro.setIdHistorico(Integer.parseInt(list.get(5)));
+                    registro.setFecha(list.get(6));
+                    registro.setTipoMtto(list.get(7));           
+                    registro.setObservaciones(new String[]{list.get(8), list.get(9)});
+                    listaMH.add(registro);
+                }
+            }
+            return listaMH;
+        }
+        
+        return null;    
     }
 
 }

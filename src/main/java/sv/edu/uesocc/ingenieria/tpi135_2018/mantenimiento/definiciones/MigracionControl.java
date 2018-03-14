@@ -9,26 +9,28 @@ package sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones;
  *
  * @author dmmaga
  */
-public class Mantenimiento {
-
-    private int idMantenimiento;
-    private String historico;
+public class MigracionControl {
+    
+    private String unidad;
+    private int idControl;
+    private String historicoMtto;
     private String noInventario;
-    private Marca marca;
+    private String marca;
     private String noSerie;
-    private Modelo modelo;
-    private Responsable responsable;
+    private String modelo;
+    private String responsable;
     private String sistemaOperativo;
     private String version;
     private boolean licencia;
     private String observaciones;
 
-    public Mantenimiento() {
+    public MigracionControl() {
     }
 
-    public Mantenimiento(int idMantenimiento, String historico, String noInventario, Marca marca, String noSerie, Modelo modelo, Responsable responsable, String sistemaOperativo, String version, boolean licencia, String observaciones) {
-        this.idMantenimiento = idMantenimiento;
-        this.historico = historico;
+    public MigracionControl(String unidad, int idControl, String historicoMtto, String noInventario, String marca, String noSerie, String modelo, String responsable, String sistemaOperativo, String version, boolean licencia, String observaciones) {
+        this.unidad = unidad;
+        this.idControl = idControl;
+        this.historicoMtto = historicoMtto;
         this.noInventario = noInventario;
         this.marca = marca;
         this.noSerie = noSerie;
@@ -39,21 +41,29 @@ public class Mantenimiento {
         this.licencia = licencia;
         this.observaciones = observaciones;
     }
-
-    public int getIdMantenimiento() {
-        return idMantenimiento;
+    
+    public String getUnidad() {
+        return unidad;
     }
 
-    public void setIdMantenimiento(int idMantenimiento) {
-        this.idMantenimiento = idMantenimiento;
+    public void setUnidad(String unidad) {
+        this.unidad = unidad;
     }
 
-    public String getHistorico() {
-        return historico;
+    public int getIdControl() {
+        return idControl;
     }
 
-    public void setHistorico(String historico) {
-        this.historico = historico;
+    public void setIdControl(int idControl) {
+        this.idControl = idControl;
+    }
+
+    public String getHistoricoMtto() {
+        return historicoMtto;
+    }
+
+    public void setHistoricoMtto(String historicoMtto) {
+        this.historicoMtto = historicoMtto;
     }
 
     public String getNoInventario() {
@@ -64,12 +74,40 @@ public class Mantenimiento {
         this.noInventario = noInventario;
     }
 
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
     public String getNoSerie() {
         return noSerie;
     }
 
     public void setNoSerie(String noSerie) {
         this.noSerie = noSerie;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public String getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
+    }
+
+    public String getSistemaOperativo() {
+        return sistemaOperativo;
     }
 
     public void setSistemaOperativo(String sistemaOperativo) {
@@ -99,31 +137,8 @@ public class Mantenimiento {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-
-    public Marca getMarca() {
-        return marca;
-    }
-
-    public void setMarca(Marca marca) {
-        this.marca = marca;
-    }
-
-    public Modelo getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(Modelo modelo) {
-        this.modelo = modelo;
-    }
-
-    public Responsable getResponsable() {
-        return responsable;
-    }
-
-    public void setResponsable(Responsable responsable) {
-        this.responsable = responsable;
-    }
     
     
 
+    
 }

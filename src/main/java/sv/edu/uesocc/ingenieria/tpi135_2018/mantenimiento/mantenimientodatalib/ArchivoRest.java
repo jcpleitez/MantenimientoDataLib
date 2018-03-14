@@ -18,6 +18,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONArray;
+import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones.MigracionControl;
+import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones.MigracionHistorico;
 
 /**
  *
@@ -35,16 +37,13 @@ public class ArchivoRest {
         this.target = cliente.target(URL_RESOURCE);
     }
 
-    public URI postLista(List<List<String>> lista) {        
+    public URI postMigracionControl(List<MigracionControl> lista) {        
         if (lista != null && !lista.isEmpty()) {        
             if(target != null){
-                //JsonObject nuevo = Json.createObjectBuilder().add("nombre", "Juan").build();
-                JSONArray jsonArray = new JSONArray();
-                for (List<String> list : lista) {
-                    jsonArray.put(new JSONArray(list));
-                }
-                
-                Response respuesta = target.path("holaJuan").
+                JSONArray jsonArray = new JSONArray();             
+                jsonArray.put(new JSONArray(lista));
+                System.out.println(jsonArray.toString());
+                Response respuesta = target.path("migracionControl").
                         request(MediaType.APPLICATION_JSON).                        
                         post(Entity.json(jsonArray));
                 if (respuesta.getStatus() == Response.Status.CREATED.getStatusCode() && respuesta != null) {
@@ -55,17 +54,22 @@ public class ArchivoRest {
         return null;
     }
     
-    @POST
-    @Produces({MediaType.APPLICATION_JSON + "; charset=utf-8"})
-    public URI postTexto(String texto) {
-        JsonObject nuevo = Json.createObjectBuilder().add("nombre", "Carlos").build();
-        if (texto != null && texto.trim().isEmpty()) {
-            Response salida = target.path("prueba").request(MediaType.APPLICATION_JSON).post(Entity.json(nuevo));
-            if (salida != null && salida.getStatus()==Response.Status.CREATED.getStatusCode()) {
-                return salida.getLocation();
+    public URI postMigracionHistorico(List<MigracionHistorico> lista) {        
+        if (lista != null && !lista.isEmpty()) {        
+            if(target != null){
+                JSONArray jsonArray = new JSONArray();             
+                jsonArray.put(new JSONArray(lista));
+                System.out.println(jsonArray.toString());
+                Response respuesta = target.path("migracionHistorico").
+                        request(MediaType.APPLICATION_JSON).                        
+                        post(Entity.json(jsonArray));
+                if (respuesta.getStatus() == Response.Status.CREATED.getStatusCode() && respuesta != null) {
+                    return respuesta.getLocation();
+                }
             }
         }
         return null;
     }
+    
 
 }

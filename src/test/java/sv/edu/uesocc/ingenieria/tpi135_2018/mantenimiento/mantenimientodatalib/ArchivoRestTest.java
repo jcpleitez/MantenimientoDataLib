@@ -5,7 +5,6 @@
  */
 package sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -19,15 +18,17 @@ import javax.ws.rs.core.Response;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones.MigracionControl;
+import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.definiciones.MigracionHistorico;
 
 /**
  *
@@ -41,6 +42,14 @@ public class ArchivoRestTest {
     final Response mockResponse = Mockito.mock(Response.class);
 
     public ArchivoRestTest() {
+    }
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
     }
 
     @Before
@@ -69,38 +78,38 @@ public class ArchivoRestTest {
      */
     
     @Test
-    public void testPostLista() throws URISyntaxException {
-        System.out.println("*Prueba postLista");
-
-        List<List<String>> lista = new ArrayList<>();
-        lista.add(new ArrayList<>());
-        lista.get(0).add("1");lista.get(0).add("HP");lista.get(0).add("PC1");
-        lista.add(new ArrayList<>());
-        lista.get(1).add("2");lista.get(1).add("Samsung");lista.get(1).add("PC2");
-
+    public void testPostMigracionControl() throws URISyntaxException {
+        System.out.println("*Prueba postMigracionControl");
+        List<MigracionControl> lista = new ArrayList<>();
+        MigracionControl reg = new MigracionControl("Fisica", 1, "PC1", "1737.1272", "HP", "38.383", "GTX", "Juan Carlos", "GNU/Linux", "testing", true, "Compilar nuevo kernel");        
+        lista.add(reg);        
         ArchivoRest instance = new ArchivoRest();
         instance.cliente = this.mockClient;
         URI expResult = new URI("http://localhost/ws/mantenimiento");
-        URI result = instance.postLista(lista);
-        
+        URI result = instance.postMigracionControl(lista);     
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
 
-//    /**
-//     * Test of postTexto method, of class ArchivoRest.
-//     */
-//    @Test
-//    public void testPostTexto() {
-//        System.out.println("postTexto");
-//        String texto = "";
-//        ArchivoRest instance = new ArchivoRest();
-//        URI expResult = null;
-//        URI result = instance.postTexto(texto);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        //fail("The test case is a prototype.");
-//    }
+    /**
+     * Test of postMigracionHistorico method, of class ArchivoRest.
+     */
+    @Test
+    public void testPostMigracionHistorico() throws URISyntaxException {
+        System.out.println("*Prueba postMigracionHistorico");
+        List<MigracionHistorico> lista = new ArrayList<>();
+        MigracionHistorico reg = new MigracionHistorico("Lic.Simon", "373.844", "Asus", "9950.8484", "ES1-13", 1, "07/11/1996", "Programado", new String[]{"-","No tiene Hyper-V"});
+        lista.add(reg);
+        ArchivoRest instance = new ArchivoRest();
+        instance.cliente = this.mockClient;
+        URI expResult = new URI("http://localhost/ws/mantenimiento");
+        URI result = instance.postMigracionHistorico(lista);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
+
+
 
 }
