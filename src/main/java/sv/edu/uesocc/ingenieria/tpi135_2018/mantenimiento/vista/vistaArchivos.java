@@ -27,8 +27,9 @@ import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.g
  * @author joker
  */
 public class vistaArchivos extends javax.swing.JFrame {
-    gestorArchivos ga = new gestorArchivos();
 
+    gestorArchivos ga = new gestorArchivos();
+    
     private Component contentPane;
 
     /**
@@ -36,6 +37,7 @@ public class vistaArchivos extends javax.swing.JFrame {
      */
     public vistaArchivos() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -210,51 +212,47 @@ public class vistaArchivos extends javax.swing.JFrame {
     private void btnBuscarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarRutaActionPerformed
         List<File> listaArchivos = new ArrayList<File>();
         DefaultListModel modeloLista = new DefaultListModel();
-                        initComponents();
-                        jList1.setModel(modeloLista);
-
-        JFileChooser administrador=new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.CSV","*.csv");
+        initComponents();
+        jList1.setModel(modeloLista);
+        
+        JFileChooser administrador = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.CSV", "*.csv");
         administrador.setFileFilter(filtro);
         administrador.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        int seleccion=administrador.showOpenDialog(contentPane);
+        int seleccion = administrador.showOpenDialog(contentPane);
         
-        if(seleccion==JFileChooser.APPROVE_OPTION){
-            File fichero=administrador.getSelectedFile();
-           if(ga.verificarDirectorio(fichero.getAbsolutePath())) {
-               System.out.println("Es un directorio" + fichero.getAbsolutePath());
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File fichero = administrador.getSelectedFile();
+            if (ga.verificarDirectorio(fichero.getAbsolutePath())) {
+                System.out.println("Es un directorio" + fichero.getAbsolutePath());
                 try {
                     listaArchivos = ga.cargarArchivos(fichero.getAbsolutePath());
                     System.out.println("Archivos");
                     Iterator iter = listaArchivos.iterator();
-                    while (iter.hasNext()){
-                         modeloLista.addElement(iter.next());
-                    System.out.println(iter.next());}
-
+                    while (iter.hasNext()) {
+                        modeloLista.addElement(iter.next());
+                        System.out.println(iter.next());
+                    }
                     
-    
                 } catch (IOException ex) {
                     Logger.getLogger(vistaArchivos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-           }
-           else{
-               if (ga.verificarArchivo(fichero.getAbsolutePath())) {
+            } else {
+                if (ga.verificarArchivo(fichero.getAbsolutePath())) {
                     System.out.println("Es un archivo" + fichero.getAbsolutePath());
-               }
-               else{
-               System.out.println("LA ruta esta vacia");
-               }
-           
-           }
-           
-    //Seleccionamos el fichero
-    
-    //Ecribe la ruta del fichero seleccionado en el campo de texto
-    txtRuta.setText(fichero.getAbsolutePath());
-    JOptionPane.showMessageDialog(null,"Se selecciono con exito");
-}
+                } else {
+                    System.out.println("LA ruta esta vacia");
+                }
+                
+            }
+
+            //Seleccionamos el fichero
+            //Ecribe la ruta del fichero seleccionado en el campo de texto
+            txtRuta.setText(fichero.getAbsolutePath());
+            JOptionPane.showMessageDialog(null, "Se selecciono con exito");
+        }
         
-        
+
     }//GEN-LAST:event_btnBuscarRutaActionPerformed
 
     private void txtRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutaActionPerformed
