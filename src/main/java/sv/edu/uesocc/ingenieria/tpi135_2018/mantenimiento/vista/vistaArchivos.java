@@ -149,7 +149,6 @@ public class vistaArchivos extends javax.swing.JFrame {
 
         lblSeparador.setForeground(java.awt.Color.red);
         lblSeparador.setText("  ");
-        lblSeparador.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "Migracion de control", "Migracion de historico" }));
 
@@ -165,7 +164,7 @@ public class vistaArchivos extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -180,27 +179,27 @@ public class vistaArchivos extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGap(20, 20, 20)
                                     .addComponent(jLabel3)))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(btnBuscarRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                     .addGap(33, 33, 33)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                    .addGap(8, 8, 8)
-                                                    .addComponent(lblSeparador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addComponent(lblAdvEncabezadp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(chkEncabezado, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                    .addComponent(jLabel4)
-                                                    .addGap(18, 18, 18)
-                                                    .addComponent(txtSeparador, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                        .addComponent(cbxTipo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                            .addGap(8, 8, 8)
+                                            .addComponent(lblSeparador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(lblAdvEncabezadp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(chkEncabezado, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel4)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtSeparador, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addGap(22, 22, 22)
+                                    .addComponent(cbxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -304,24 +303,24 @@ public class vistaArchivos extends javax.swing.JFrame {
             gestor.setCaracter(txtSeparador.getText());
             txtSeparador.setText("");
             try {
-                //System.out.println("rutaaaaaaaaaaaaaaaaaaa: "+ruta+"/"+modelo.get(seleccionado).toString());
+                gestor.setEncabezado(chkEncabezado.isSelected());
                 if (cbxTipo.getSelectedIndex() > 0) {
                     List<List<String>> l = gestor.parser(new File(ruta + "/" + modelo.get(seleccionado).toString()));
                     if (cbxTipo.getSelectedIndex() == 1) {
                         List<MigracionControl> l2 = gestor.parserControl(l);
-                        if (l2.isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "El archivo proporcionado no tiene elformeto adecuado");
-                        }else{
-                            //envio.postMigracionControl(l2);
+                        if (!l2.isEmpty()) {
                             modelo.remove(seleccionado);
+                            envio.postMigracionControl(l2);
+                        }else{
+                            JOptionPane.showMessageDialog(null, "El archivo proporcionado no tiene el formato adecuado");
                         }
                     } else {
                         List<MigracionHistorico> l2 = gestor.parserHistorico(l);
-                        if (l2.isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "El archivo proporcionado no tiene elformeto adecuado");
-                        }else{
-                            //envio.postMigracionHistorico(l2);
+                        if (!l2.isEmpty()) {
                             modelo.remove(seleccionado);
+                            envio.postMigracionHistorico(l2);
+                        }else{
+                            JOptionPane.showMessageDialog(null, "El archivo proporcionado no tiene el formato adecuado");
                         }
                     }
                     
