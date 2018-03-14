@@ -239,50 +239,6 @@ public class vistaArchivos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRutaActionPerformed
 
-    public void metodoMonzon() {
-        List<File> listaArchivos = new ArrayList<File>();
-        DefaultListModel modeloLista = new DefaultListModel();
-        initComponents();
-        jList1.setModel(modeloLista);
-
-        JFileChooser administrador = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.CSV", "*.csv");
-        administrador.setFileFilter(filtro);
-        administrador.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        int seleccion = administrador.showOpenDialog(contentPane);
-
-        if (seleccion == JFileChooser.APPROVE_OPTION) {
-            File fichero = administrador.getSelectedFile();
-            if (gestor.verificarDirectorio(fichero.getAbsolutePath())) {
-                System.out.println("Es un directorio" + fichero.getAbsolutePath());
-                try {
-                    listaArchivos = gestor.cargarArchivos(fichero.getAbsolutePath());
-                    System.out.println("Archivos");
-                    Iterator iter = listaArchivos.iterator();
-                    while (iter.hasNext()) {
-                        modeloLista.addElement(iter.next());
-                        System.out.println(iter.next());
-                    }
-
-                } catch (IOException ex) {
-                    Logger.getLogger(vistaArchivos.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                if (gestor.verificarArchivo(fichero.getAbsolutePath())) {
-                    System.out.println("Es un archivo" + fichero.getAbsolutePath());
-                } else {
-                    System.out.println("LA ruta esta vacia");
-                }
-
-            }
-
-            //Seleccionamos el fichero
-            //Ecribe la ruta del fichero seleccionado en el campo de texto
-            txtRuta.setText(fichero.getAbsolutePath());
-            JOptionPane.showMessageDialog(null, "Se selecciono con exito");
-        }
-    }
-
     /**
      * @param args the command line arguments
      */
