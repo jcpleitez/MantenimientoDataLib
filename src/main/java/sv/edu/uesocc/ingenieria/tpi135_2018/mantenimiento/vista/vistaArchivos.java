@@ -20,6 +20,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.ArchivoRest;
 import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivos;
 
 /**
@@ -31,6 +32,8 @@ public class vistaArchivos extends javax.swing.JFrame {
     gestorArchivos gestor = new gestorArchivos();
     DefaultListModel modelo = new DefaultListModel();
     int seleccionado;
+    ArchivoRest envio = new ArchivoRest();
+    String ruta = "";
     private Component contentPane;
 
     /**
@@ -45,7 +48,6 @@ public class vistaArchivos extends javax.swing.JFrame {
         btnEnviar.setEnabled(false);
         lblAdvEncabezadp.setText(" ");
         lblSeparador.setText(" ");
-        
     }
 
     /**
@@ -166,7 +168,7 @@ public class vistaArchivos extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
                                             .addGap(50, 50, 50))))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGap(20, 20, 20)
@@ -188,7 +190,7 @@ public class vistaArchivos extends javax.swing.JFrame {
                                             .addComponent(lblAdvEncabezadp, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(chkEncabezado))))))))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,10 +229,7 @@ public class vistaArchivos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,7 +243,6 @@ public class vistaArchivos extends javax.swing.JFrame {
 
     private void btnBuscarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarRutaActionPerformed
         JFileChooser chooser = new JFileChooser();
-        String ruta = "";
 //        chooser.setCurrentDirectory(new java.io.File("."));
         chooser.setDialogTitle("Seleccione sus archivos o directorio de archivos");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -256,7 +254,7 @@ public class vistaArchivos extends javax.swing.JFrame {
                 try {
                     List<File> lista = gestor.cargarArchivos(ruta);
                     for (File fil : lista) {
-                        System.out.println("archivo: " + fil.getName());
+                        //System.out.println("archivo: " + fil.getName());
                         modelo.addElement(fil.getName());
                     }
                 } catch (IOException ex) {
@@ -273,53 +271,47 @@ public class vistaArchivos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtRutaActionPerformed
 
     private void txtSeparadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSeparadorKeyTyped
-
         char tipe = evt.getKeyChar();
-
-        if((tipe<',' || tipe>'.') && (tipe<':' || tipe>';')){
+        if ((tipe < ',' || tipe > '.') && (tipe < ':' || tipe > ';')) {
             evt.consume();
-        } if(txtSeparador.getText().length()==1){
+        }
+        if (txtSeparador.getText().length() == 1) {
             evt.consume();
         }
     }//GEN-LAST:event_txtSeparadorKeyTyped
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
-       gestorArchivos gestor= new gestorArchivos();
-       lblSeparador.setText(" ");
-         if (txtSeparador.getText().isEmpty()){
+        //gestorArchivos gestor = new gestorArchivos();
+        lblSeparador.setText(" ");
+        if (txtSeparador.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "No proporciono el separador");
             lblSeparador.setText("*");
             txtSeparador.requestFocus();
+        } else {
+            gestor.caracter = txtSeparador.getText();
+            txtSeparador.setText("");
+            try {
+                //System.out.println("rutaaaaaaaaaaaaaaaaaaa: "+ruta+"/"+modelo.get(seleccionado).toString());
+                List<List<String>> l = gestor.parser(new File(ruta+"/"+modelo.get(seleccionado).toString()));
+                //envio.postLista(l);
+            } catch (IOException ex) {
+                Logger.getLogger(vistaArchivos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            modelo.remove(seleccionado);
         }
-         else{
-         gestor.caracter= txtSeparador.getText(); 
-         txtSeparador.setText("");       
-         modelo.remove(seleccionado);
-     
-         }
-         
-        
-        
-        
-        
-        
     }//GEN-LAST:event_btnEnviarActionPerformed
 
-   
-    
+
     private void listArchivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listArchivosMouseClicked
         txtSeparador.setEnabled(true);
         chkEncabezado.setEnabled(true);
         btnEnviar.setEnabled(true);
         seleccionado = listArchivos.getSelectedIndex();
-                System.out.println(seleccionado);
-
-        
-        
+        //System.out.println(seleccionado);
     }//GEN-LAST:event_listArchivosMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
