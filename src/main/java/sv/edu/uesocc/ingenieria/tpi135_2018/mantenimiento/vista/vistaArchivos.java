@@ -29,6 +29,7 @@ import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.g
 public class vistaArchivos extends javax.swing.JFrame {
 
     gestorArchivos gestor = new gestorArchivos();
+    DefaultListModel modelo = new DefaultListModel();
 
     private Component contentPane;
 
@@ -38,6 +39,7 @@ public class vistaArchivos extends javax.swing.JFrame {
     public vistaArchivos() {
         initComponents();
         this.setLocationRelativeTo(null);
+        listArchivos.setModel(modelo);
     }
 
     /**
@@ -54,7 +56,7 @@ public class vistaArchivos extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnBuscarRuta = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaArchivosFiltrados = new javax.swing.JList<>();
+        listArchivos = new javax.swing.JList<>();
         btnAgregar = new javax.swing.JButton();
         btnQuitar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -90,9 +92,9 @@ public class vistaArchivos extends javax.swing.JFrame {
             }
         });
 
-        listaArchivosFiltrados.setBackground(new java.awt.Color(226, 226, 226));
-        listaArchivosFiltrados.setFont(new java.awt.Font("Te X Gyre Adventor", 0, 12)); // NOI18N
-        jScrollPane1.setViewportView(listaArchivosFiltrados);
+        listArchivos.setBackground(new java.awt.Color(226, 226, 226));
+        listArchivos.setFont(new java.awt.Font("Te X Gyre Adventor", 0, 12)); // NOI18N
+        jScrollPane1.setViewportView(listArchivos);
 
         btnAgregar.setBackground(new java.awt.Color(0, 68, 69));
         btnAgregar.setFont(new java.awt.Font("Te X Gyre Adventor", 1, 12)); // NOI18N
@@ -217,13 +219,14 @@ public class vistaArchivos extends javax.swing.JFrame {
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            ruta = ""+chooser.getSelectedFile().getAbsolutePath();
+            ruta = "" + chooser.getSelectedFile().getAbsolutePath();
             if (gestor.verificarDirectorio(ruta)) {
                 txtRuta.setText(ruta);
                 try {
                     List<File> lista = gestor.cargarArchivos(ruta);
-                    for (File file : lista) {
-                        System.out.println("archivo: "+file.getName());
+                    for (File fil : lista) {
+                        System.out.println("archivo: " + fil.getName());
+                        modelo.addElement(fil.getName());
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(vistaArchivos.class.getName()).log(Level.SEVERE, null, ex);
@@ -232,7 +235,6 @@ public class vistaArchivos extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "No selecciono ningun directorio");
         }
-
     }//GEN-LAST:event_btnBuscarRutaActionPerformed
 
     private void txtRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutaActionPerformed
@@ -286,7 +288,7 @@ public class vistaArchivos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> listaArchivosFiltrados;
+    private javax.swing.JList<String> listArchivos;
     private javax.swing.JTextField txtRuta;
     // End of variables declaration//GEN-END:variables
 }

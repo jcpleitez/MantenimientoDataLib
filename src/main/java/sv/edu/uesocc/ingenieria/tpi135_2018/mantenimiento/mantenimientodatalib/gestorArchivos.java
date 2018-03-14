@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
  */
 public class gestorArchivos {
 
-    private String caracter;
-    private boolean encabezado;
+    public String caracter;
+    public boolean encabezado;
     private static String expresion = "(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
     public gestorArchivos() {                                                   //Valores por defecto
