@@ -110,6 +110,29 @@ public class ArchivoRestTest {
         //fail("The test case is a prototype.");
     }
 
+    /**
+     * Test of postText method, of class ArchivoRest.
+     */
+    @Test
+    public void testPostText() throws URISyntaxException {
+        System.out.println("*Prueba postLista");
+
+        List<List<String>> lista = new ArrayList<>();
+        lista.add(new ArrayList<>());
+        lista.get(0).add("1");lista.get(0).add("HP");lista.get(0).add("PC1");
+        lista.add(new ArrayList<>());
+        lista.get(1).add("2");lista.get(1).add("Samsung");lista.get(1).add("PC2");
+
+        ArchivoRest instance = new ArchivoRest();
+        instance.cliente = this.mockClient;
+        URI expResult = new URI("http://localhost/ws/mantenimiento");
+        URI result = instance.postText(lista);
+        
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
+
 
 
 }

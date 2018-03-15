@@ -68,5 +68,21 @@ public class ArchivoRest {
         }
         return null;
     }
+    
+    public URI postText(List<List<String>> lista) {
+        if (lista != null && !lista.isEmpty()) {
+            if (target != null) {
+                JSONArray jsonArray = new JSONArray();
+                jsonArray.put(new JSONArray(lista));
+                Response respuesta = target.path("migracionTexto").
+                        request(MediaType.APPLICATION_JSON).
+                        post(Entity.json(jsonArray));
+                if (respuesta.getStatus() == Response.Status.CREATED.getStatusCode() && respuesta != null) {
+                    return respuesta.getLocation();
+                }
+            }
+        }
+        return null;
+    }
 
 }

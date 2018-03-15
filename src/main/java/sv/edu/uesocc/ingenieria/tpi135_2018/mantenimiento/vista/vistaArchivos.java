@@ -171,7 +171,7 @@ public class vistaArchivos extends javax.swing.JFrame {
 
         cbxTipo.setBackground(new java.awt.Color(255, 255, 255));
         cbxTipo.setForeground(new java.awt.Color(0, 0, 0));
-        cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "Migracion de control", "Migracion de historico" }));
+        cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "Migracion de control", "Migracion de historico", "Migracion Texto" }));
 
         jLabel2.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -345,7 +345,7 @@ public class vistaArchivos extends javax.swing.JFrame {
                         if(!lMC.isEmpty()){
                             modelo.remove(seleccionado);
                             listArchivos.setModel(modelo);
-                            //gestoRest.postMigracionControl(lMC);
+                            gestoRest.postMigracionControl(lMC);
                         }else{
                             JOptionPane.showMessageDialog(null, "El archivo no coincide el tipo de migracion seleccionado");
                         }
@@ -360,7 +360,21 @@ public class vistaArchivos extends javax.swing.JFrame {
                         if(!lMH.isEmpty()){
                             modelo.remove(seleccionado);
                             listArchivos.setModel(modelo);
-                            //gestoRest.postMigracionHistorico(lMH);
+                            gestoRest.postMigracionHistorico(lMH);
+                        }else{
+                            JOptionPane.showMessageDialog(null, "El archivo no coincide el tipo de migracion seleccionado");
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(vistaArchivos.class.getName()).log(Level.SEVERE, null, ex);
+                    }            
+                break;
+                case 3://Migracion Texto
+                    try { 
+                        List<List<String>> l = gestor.parser(new File(ruta+"/"+modelo.get(seleccionado).toString()));                        
+                        if(!l.isEmpty()){
+                            modelo.remove(seleccionado);
+                            listArchivos.setModel(modelo);
+                            gestoRest.postText(l);
                         }else{
                             JOptionPane.showMessageDialog(null, "El archivo no coincide el tipo de migracion seleccionado");
                         }

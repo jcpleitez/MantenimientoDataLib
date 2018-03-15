@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.ArchivoRestTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.476 sec
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.083 sec

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivosTest" time="0.331" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivosTest" time="0.163" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/oracle-java8-jdk-amd64/jre/lib/amd64"/>
@@ -31,7 +31,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="os.version" value="4.15.6"/>
+    <property name="os.version" value="4.15.4"/>
     <property name="user.home" value="/home/jcpleitez"/>
     <property name="user.timezone" value="America/El_Salvador"/>
     <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
@@ -59,10 +59,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivosTest" name="testVerificarDirectorio" time="0.021"/>
-  <testcase classname="sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivosTest" name="testVerificarArchivo" time="0.001"/>
-  <testcase classname="sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivosTest" name="testParserHistorico" time="0.002"/>
-  <testcase classname="sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivosTest" name="testCargarArchivos" time="0.151"/>
-  <testcase classname="sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivosTest" name="testParserControl" time="0.002"/>
-  <testcase classname="sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivosTest" name="testParser" time="0.027"/>
+  <testcase classname="sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivosTest" name="testVerificarDirectorio" time="0.013"/>
+  <testcase classname="sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivosTest" name="testVerificarArchivo" time="0"/>
+  <testcase classname="sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivosTest" name="testParserHistorico" time="0"/>
+  <testcase classname="sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivosTest" name="testCargarArchivos" time="0.067"/>
+  <testcase classname="sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivosTest" name="testParserControl" time="0.001"/>
+  <testcase classname="sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.gestorArchivosTest" name="testParser" time="0.025"/>
 </testsuite>
