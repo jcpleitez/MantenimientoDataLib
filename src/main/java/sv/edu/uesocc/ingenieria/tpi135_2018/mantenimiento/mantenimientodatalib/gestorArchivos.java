@@ -84,7 +84,7 @@ public class gestorArchivos {
         if (lista != null && !lista.isEmpty()) {
             List<MigracionControl> listaMC = new ArrayList<>();
             for (List<String> list : lista) {
-                if (list.size() == 12 && !list.isEmpty()) {
+                if (list.size() == 13 && !list.isEmpty()) {
                     MigracionControl registro = new MigracionControl();
                     registro.setUnidad(list.get(0));
                     registro.setIdControl(Integer.parseInt(list.get(1)));
@@ -96,8 +96,12 @@ public class gestorArchivos {
                     registro.setResponsable(list.get(7));
                     registro.setSistemaOperativo(list.get(8));
                     registro.setVersion(list.get(9));
-                    registro.setLicencia(list.get(10).equals("true"));
-                    registro.setObservaciones(list.get(11));
+                    if(list.get(10).equals("X")){
+                        registro.setLicencia(true);
+                    }else if(list.get(11).equals("X")){
+                        registro.setLicencia(false);
+                    }                    
+                    registro.setObservaciones(list.get(12));
                     listaMC.add(registro);
                 }
             }

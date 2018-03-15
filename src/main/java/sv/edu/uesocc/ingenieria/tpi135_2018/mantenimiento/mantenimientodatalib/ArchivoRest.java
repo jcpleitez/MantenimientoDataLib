@@ -42,7 +42,6 @@ public class ArchivoRest {
             if (target != null) {
                 JSONArray jsonArray = new JSONArray();
                 jsonArray.put(new JSONArray(lista));
-                System.out.println(jsonArray.toString());
                 Response respuesta = target.path("migracionControl").
                         request(MediaType.APPLICATION_JSON).
                         post(Entity.json(jsonArray));
@@ -59,7 +58,6 @@ public class ArchivoRest {
             if (target != null) {
                 JSONArray jsonArray = new JSONArray();
                 jsonArray.put(new JSONArray(lista));
-                System.out.println(jsonArray.toString());
                 Response respuesta = target.path("migracionHistorico").
                         request(MediaType.APPLICATION_JSON).
                         post(Entity.json(jsonArray));

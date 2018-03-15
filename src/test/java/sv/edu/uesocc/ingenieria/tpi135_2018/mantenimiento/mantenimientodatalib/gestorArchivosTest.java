@@ -127,13 +127,13 @@ public class gestorArchivosTest {
         System.out.println("*prueba parserControl");
         List<List<String>> lista = new ArrayList<>();
         lista.add(new ArrayList<>());
-        lista.get(0).add("Fisica");lista.get(0).add("1");lista.get(0).add("PC1");lista.get(0).add("0210-050996");lista.get(0).add("DELL");lista.get(0).add("PC72u1");lista.get(0).add("GTX");lista.get(0).add("Juan Carlos");lista.get(0).add("Linux");lista.get(0).add("14.5");lista.get(0).add("true");lista.get(0).add("Todo oc");
+        lista.get(0).add("Fisica");lista.get(0).add("1");lista.get(0).add("PC1");lista.get(0).add("0210-050996");lista.get(0).add("DELL");lista.get(0).add("PC72u1");lista.get(0).add("GTX");lista.get(0).add("Juan Carlos");lista.get(0).add("Linux");lista.get(0).add("14.5");lista.get(0).add("X");lista.get(0).add("");lista.get(0).add("Todo oc");
         lista.add(new ArrayList<>());
-        lista.get(1).add("Matematicas");lista.get(1).add("2");lista.get(1).add("PC2");lista.get(1).add("0210-050567");lista.get(1).add("ASUS");lista.get(1).add("Puw7r1");lista.get(1).add("H61");lista.get(1).add("Diana Batres");lista.get(1).add("Windows");lista.get(1).add("8.1");lista.get(1).add("true");lista.get(1).add("Todo mal ah");
-        gestorArchivos instance = new gestorArchivos();
-        String expResult = "Fisica";
+        lista.get(1).add("Matematicas");lista.get(1).add("2");lista.get(1).add("PC2");lista.get(1).add("0210-050567");lista.get(1).add("ASUS");lista.get(1).add("Puw7r1");lista.get(1).add("H61");lista.get(1).add("Diana Batres");lista.get(1).add("Windows");lista.get(1).add("8.1");lista.get(1).add("");lista.get(1).add("X");lista.get(1).add("Todo mal ah");
+        gestorArchivos instance = new gestorArchivos();        
+        boolean expResult = true;
         List<MigracionControl> result = instance.parserControl(lista);
-        assertEquals(expResult, result.get(0).getUnidad());
+        assertEquals(expResult, result.get(0).isLicencia());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
