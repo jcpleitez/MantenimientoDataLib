@@ -11,6 +11,7 @@ import java.awt.Frame;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import static java.nio.file.Files.list;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,10 +33,10 @@ import sv.edu.uesocc.ingenieria.tpi135_2018.mantenimiento.mantenimientodatalib.g
 public class vistaArchivos extends javax.swing.JFrame {
 
     gestorArchivos gestor = new gestorArchivos();
-    DefaultListModel modelo = new DefaultListModel();
-    int seleccionado;
-    ArchivoRest envio = new ArchivoRest();
+    DefaultListModel modelo = new DefaultListModel();    
+    ArchivoRest gestoRest;
     String ruta = "";
+    List<File> listaArchivos;
     private Component contentPane;
 
     /**
@@ -43,13 +44,17 @@ public class vistaArchivos extends javax.swing.JFrame {
      */
     public vistaArchivos() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        listArchivos.setModel(modelo);
+        Limpiar();
+    }
+    
+    public void Limpiar(){
+        modelo = new DefaultListModel();
+        txtRuta.setText("");
+        cbxTipo.setSelectedIndex(0);
+        lblSeparador.setText(",");
         txtSeparador.setEnabled(false);
         chkEncabezado.setEnabled(false);
         btnEnviar.setEnabled(false);
-        lblAdvEncabezadp.setText(" ");
-        lblSeparador.setText(" ");
     }
 
     /**
@@ -81,6 +86,7 @@ public class vistaArchivos extends javax.swing.JFrame {
         setBackground(new java.awt.Color(221, 188, 149));
 
         jPanel1.setBackground(new java.awt.Color(111, 185, 143));
+        jPanel1.setName("Migracion CSV"); // NOI18N
 
         txtRuta.setBackground(new java.awt.Color(226, 226, 226));
         txtRuta.setText("   ");
@@ -138,6 +144,7 @@ public class vistaArchivos extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(0, 68, 69));
         jButton1.setText("Exit");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,23 +258,29 @@ public class vistaArchivos extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarRutaActionPerformed
+        Limpiar();
         JFileChooser chooser = new JFileChooser();
-//        chooser.setCurrentDirectory(new java.io.File("."));
-        chooser.setDialogTitle("Seleccione sus archivos o directorio de archivos");
+        chooser.setDialogTitle("Seleccione el directorio de sus archivos");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
         if (chooser.showOpenDialog(contentPane) == JFileChooser.APPROVE_OPTION) {
-            ruta = "" + chooser.getSelectedFile().getAbsolutePath();
+            ruta = chooser.getSelectedFile().getAbsolutePath();
             if (gestor.verificarDirectorio(ruta)) {
                 txtRuta.setText(ruta);
                 try {
-                    List<File> lista = gestor.cargarArchivos(ruta);
-                    for (File fil : lista) {
-                        //System.out.println("archivo: " + fil.getName());
-                        modelo.addElement(fil.getName());
+                    listaArchivos = gestor.cargarArchivos(ruta);
+                    for (File fil : listaArchivos) {
+                        String filePath[] = fil.toString().split(ruta);
+                        modelo.addElement(filePath[filePath.length-1]);                        
+                    }
+                    if(listaArchivos.isEmpty()){
+                        JOptionPane.showMessageDialog(null, "No se encontro ningu archivo");
+                    }else{
+                        listArchivos.setModel(modelo);
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(vistaArchivos.class.getName()).log(Level.SEVERE, null, ex);
@@ -276,6 +289,7 @@ public class vistaArchivos extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "No selecciono ningun directorio");
         }
+        
     }//GEN-LAST:event_btnBuscarRutaActionPerformed
 
     private void txtRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutaActionPerformed
@@ -293,44 +307,57 @@ public class vistaArchivos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSeparadorKeyTyped
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
-        //gestorArchivos gestor = new gestorArchivos();
-        lblSeparador.setText(" ");
-        if (txtSeparador.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No proporciono el separador");
-            lblSeparador.setText("*");
-            txtSeparador.requestFocus();
-        } else {
+        if(!txtSeparador.getText().isEmpty()){
             gestor.setCaracter(txtSeparador.getText());
-            txtSeparador.setText("");
-            try {
-                gestor.setEncabezado(chkEncabezado.isSelected());
-                if (cbxTipo.getSelectedIndex() > 0) {
-                    List<List<String>> l = gestor.parser(new File(ruta + "/" + modelo.get(seleccionado).toString()));
-                    if (cbxTipo.getSelectedIndex() == 1) {
-                        List<MigracionControl> l2 = gestor.parserControl(l);
-                        if (!l2.isEmpty()) {
-                            modelo.remove(seleccionado);
-                            envio.postMigracionControl(l2);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "El archivo proporcionado no tiene el formato adecuado");
-                        }
-                    } else {
-                        List<MigracionHistorico> l2 = gestor.parserHistorico(l);
-                        if (!l2.isEmpty()) {
-                            modelo.remove(seleccionado);
-                            envio.postMigracionHistorico(l2);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "El archivo proporcionado no tiene el formato adecuado");
-                        }
-                    }
+        }
+        if(chkEncabezado.isSelected()){
+            gestor.setEncabezado(true);
+        }
+        int seleccion = cbxTipo.getSelectedIndex();
+        int seleccionado = listArchivos.getSelectedIndex();
+        System.out.println(seleccionado);
+        
+        if(seleccionado >=0){
+            switch(seleccion){
 
-                } else {
-                    JOptionPane.showMessageDialog(null, "Selecciona el tipo, maje :v");
-                }
-                //envio.postLista(l);
-            } catch (IOException ex) {
-                Logger.getLogger(vistaArchivos.class.getName()).log(Level.SEVERE, null, ex);
+                case 0:
+                    JOptionPane.showMessageDialog(null, "Selecciona el tipo de migracion");                
+                break;
+                case 1://Migracion Control
+                    try {                    
+                        List<List<String>> l = gestor.parser(new File(ruta+"/"+modelo.get(seleccionado).toString()));
+                        List<MigracionControl> lMC = gestor.parserControl(l);
+                        if(!lMC.isEmpty()){
+                            modelo.remove(seleccionado);
+                            listArchivos.setModel(modelo);
+                            //gestoRest.postMigracionControl(lMC);
+                        }else{
+                            JOptionPane.showMessageDialog(null, "El archivo no coincide el tipo de migracion seleccionado");
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(vistaArchivos.class.getName()).log(Level.SEVERE, null, ex);
+                    }            
+                break;
+                case 2://Migracion Historico
+                    try { 
+                        List<List<String>> l = gestor.parser(new File(ruta+"/"+modelo.get(seleccionado).toString()));
+                        List<MigracionHistorico> lMH = gestor.parserHistorico(l);
+                        if(!lMH.isEmpty()){
+                            modelo.remove(seleccionado);
+                            listArchivos.setModel(modelo);
+                            //gestoRest.postMigracionHistorico(lMH);
+                        }else{
+                            JOptionPane.showMessageDialog(null, "El archivo no coincide el tipo de migracion seleccionado");
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(vistaArchivos.class.getName()).log(Level.SEVERE, null, ex);
+                    }            
+                break;
+                default:
+                break;            
             }
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione el archivo que desea enviar"); 
         }
     }//GEN-LAST:event_btnEnviarActionPerformed
 
@@ -339,8 +366,6 @@ public class vistaArchivos extends javax.swing.JFrame {
         txtSeparador.setEnabled(true);
         chkEncabezado.setEnabled(true);
         btnEnviar.setEnabled(true);
-        seleccionado = listArchivos.getSelectedIndex();
-        //System.out.println(seleccionado);
     }//GEN-LAST:event_listArchivosMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
